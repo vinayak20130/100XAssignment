@@ -1,0 +1,218 @@
+      /* Reset default margin and padding */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #FFDAB9; /* Peach */
+    }
+    
+    /* Basic layout styles */
+    #app-container {
+        display: flex;
+        height: 100vh;
+        overflow: hidden;
+    }
+    
+    /* Sidebar styles */
+    #sidebar {
+        width: 20%;
+        background-color: #FF4500; /* Burnt Orange */
+        color: white;
+        padding: 20px;
+    }
+    
+    #chat-list {
+        list-style: none;
+        padding: 0;
+    }
+    
+    
+    
+    .chat-item.active {
+        background-color: rgba(255, 255, 255, 0.1);
+    }
+    
+    /* Chat content styles */
+    #chat-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        padding: 20px;
+        background-color: #FFDAB9; /* Peach */
+    }
+    
+    #chat-header {
+        background-color: #FF4500; /* Burnt Orange */
+        color: white;
+        padding: 15px;
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+    
+    #message-list {
+        flex: 1;
+        overflow-y: auto;
+        list-style: none;
+        padding: 0;
+    }
+    
+    .message {
+        padding: 10px;
+        border-radius: 5px;
+        margin-bottom: 10px;
+        max-width: 80%;
+    }
+    
+    .incoming {
+        background-color: #FFDAB9; /* Peach, slightly lighter */
+    }
+    
+    .outgoing {
+        background-color: #FFE4B5; /* Moccasin, a lighter peach */
+        align-self: flex-end;
+    }
+    
+    /* Message input styles */
+    #message-input {
+        display: flex;
+        padding: 15px;
+        background-color: #FFDAB9; /* Moccasin */
+        border-top: 1px solid #FF4500; /* Burnt Orange */
+    }
+    
+    #input {
+        flex: 1;
+        padding: 10px;
+        border: none;
+        border-radius: 20px;
+        outline: none;
+        margin-right: 10px;
+    }
+    
+    #input::placeholder {
+        color: #aaa;
+    }
+    
+    #send-button {
+        background-color: #FF4500; /* Burnt Orange */
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        cursor: pointer;
+        outline: none;
+    }
+    
+    #emoji-modal {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.7);
+    }
+    
+    #emoji-modal-content {
+        background-color: #FFDAB9; /* Peach */
+        padding: 20px;
+        border-radius: 5px;
+        width: 60%;
+        max-width: 500px;
+    }
+    
+    #emoji-list {
+        list-style: none;
+        padding: 20px;
+    }
+    
+    .emoji-item {
+        margin-bottom: 10px;
+    }
+    
+    #ok-button {
+        display: block;
+        margin: 20px auto 0;
+        padding: 10px 20px;
+        background-color: #FF4500; /* Burnt Orange */
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    #submit-username{
+        display: block;
+        margin: 20px auto 0;
+        padding: 10px 20px;
+        background-color: #FF4500; /* Burnt Orange */
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    #username-modal, #emoji-modal {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.7);
+    }
+    
+    #username-modal-content {
+        background-color: #FFDAB9; /* Peach */
+        padding: 20px;
+        border-radius: 5px;
+        width: 60%;
+        max-width: 300px;
+        text-align: center;
+    }
+    
+    #username-input {
+        width: 100%;
+        padding: 10px;
+        border: none;
+        border-radius: 20px;
+        margin-bottom: 10px;
+        outline: none;
+    }
+    #username-modal, #emoji-modal {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.7);
+    }
+    
+    #username-modal-content {
+        background-color: #FFDAB9; /* Peach */
+        padding: 20px;
+        border-radius: 5px;
+        width: 60%;
+        max-width: 300px;
+        text-align: center;
+    }
+    
+    #username-input {
+        width: 100%;
+        padding: 10px;
+        border: none;
+        border-radius: 20px;
+        margin-bottom: 10px;
+        outline: none;
+    }
+        

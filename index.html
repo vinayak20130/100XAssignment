@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WhatsApp-like Chat App</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    
+<div id="username-modal">
+    <div id="username-modal-content">
+        <h3>Enter Your Name</h3>
+        <input type="text" id="username-input" placeholder="Your Name...">
+        <button id="submit-username">Submit</button>
+    </div>
+</div>
+
+    <div id="emoji-modal">
+        <div id="emoji-modal-content">
+            <h3>Keywords and Emojis</h3>
+            <ul id="emoji-list">
+                <li class="emoji-item">react: ⚛️</li>
+                <li class="emoji-item">woah: 😯</li>
+                <li class="emoji-item">hey: 👋</li>
+                <li class="emoji-item">lol: 😂</li>
+                <li class="emoji-item">like: ❤️</li>
+                <li class="emoji-item">congratulations: 🎉</li>
+            </ul>
+            <button id="ok-button">OK</button>
+        </div>
+    </div>
+    <div id="app-container">
+        <div id="sidebar">
+            <ul id="chat-list">
+                <li class="chat-item active">Hi!</li>
+               
+            </ul>
+        </div>
+        <div id="chat-content">
+            <div id="chat-header">Hi!</div>
+            <ul id="message-list">
+                <!-- Messages will be appended here -->
+            </ul>
+            <div id="message-input">
+                <input id="input" autocomplete="off" placeholder="Type a message...">
+                <button id="send-button">Send</button>
+            </div>
+        </div>
+    </div>
+
+    
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        
+        $(function () {
+            let currentSender ;
+const socket = io({ query: { username: currentSender } });
+
+            const $chatList = $('#chat-list');
+            const $messageList = $('#message-list');
+            const $input = $('#input');
+            
+
+            const emojiMap = {
+            'react': '⚛️',
+            'woah': '😯',
+            'hey': '👋',
+            'lol': '😂',
+            'like': '❤️',
+            'congratulations': '🎉'
+        };
+    
+            // Switching between senders in the sidebar
+            $chatList.on('click', '.chat-item', function () {
+                $chatList.find('.chat-item').removeClass('active');
+                $(this).addClass('active');
+                currentSender = $(this).text();
+                $('#chat-header').text("Chatting as " + currentSender);
+            });
+    
+            // Sending a message with the Send button
+            $('#send-button').click(function () {
+    const messageContent = $input.val();
+    if (messageContent.trim() !== '') {
+        const message = { sender: currentSender, content: messageContent };
+        socket.emit('chat message', message);
+        // Keep this line to immediately display the message on the sender's side
+        $input.val('');
+    }
+});
+
+
+// Listen for the event that notifies about a new user
+socket.on('user joined', function (username) {
+        $('#chat-list').append(`<li class="chat-item">${username}</li>`);
+    });
+
+socket.on('chat message', function (message) {
+    appendMessage(message);
+});
+    
+function appendMessage(message) {
+    console.log("Appending message:", message);
+
+    // If this is a self message and the user is the currentSender, ignore it
+    if (message.isSelf && message.sender === currentSender) return;
+
+    // Replacing words with emojis
+    for (let word in emojiMap) {
+        const regex = new RegExp(`\\b${word}\\b`, 'gi');
+        message.content = message.content.replace(regex, emojiMap[word]);
+    }
+
+    const liClass = message.sender === currentSender ? 'message outgoing' : 'message incoming';
+    const li = $('<li>').addClass(liClass).text(message.sender + ': ' + message.content);
+    $messageList.append(li);
+    $messageList.scrollTop($messageList[0].scrollHeight);
+}
+
+
+
+ });
+ $('#submit-username').click(function () {
+    const username = $('#username-input').val().trim();
+    if (username) {
+        $('#username-modal').hide();
+        $('#chat-list').append(`<li class="chat-item">${username}</li>`);
+        currentSender = username; // Here, you set the variable.
+        $('#chat-header').text(currentSender);
+
+        // Emit the username to the server
+        socket.emit('new user', username);
+    }
+});
+
+
+ $('#ok-button').click(function () {
+            $('#emoji-modal').hide();
+        });
+    </script>
+</body>
+</html>
